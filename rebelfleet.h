@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <cstdio>
+#define pr if(1)
 
 #define explorer_id 1;
 #define starcruiser_id 2;
@@ -20,8 +21,9 @@ protected:
     Speed speedValue;
     AttackPower attackValue;
 public:
-    RebelStarship() {
-
+    RebelStarship(ShieldPoints shield, Speed speed, AttackPower attack) :
+    shieldValue(shield), speedValue(speed), attackValue(attack) {
+		pr printf("konstruktor rebelstarship sie wywoluje i zapisuje %d %d %d\n", shieldValue, speedValue, attackValue);
     }
 
     ShieldPoints getShield() {
@@ -42,6 +44,8 @@ public:
     }
 };
 
+//TODO: zastanowić się nad zmianą funkcji fabrykujących na sprytne wskaźniki
+
 class Explorer : public RebelStarship {
 protected:
 
@@ -52,6 +56,9 @@ public:
     }
 
     AttackPower getAttackPower = delete;
+	Explorer createExplorer(ShieldPoints shield, Speed speed) {
+		return new Explorer(shield, speed);
+	}
 };
 
 class StarCruiser : public RebelStarship {
@@ -62,7 +69,10 @@ public:
     StarCruiser(ShieldPoints shield, Speed speed, AttackPower attack) : RebelStarship(shield, speed, attack) {
         assert(speed >= 99999 && speed <= 299795);
     }
-
+	
+	StarCruiser createStarCruiser(ShieldPoints shield, Speed speed, AttackPower attack) {
+		return new StarCruiser(shield, speed, attack);
+	}
 
 };
 
@@ -74,29 +84,13 @@ public:
         assert(speed >= 299796 && speed <= 2997960);
     }
 
-
+	XWing createXWing(ShieldPoints shield, Speed speed, AttackPower attack) {
+		return new XWing(shield, speed, attack);
+	}
 };
 
-//poniżej jest próba napisania tych function
 
-class Factory {
-public:
-    public RebelStarship createShip(int id, ShieldPoints shield, Speed speed, AttackPower attack) {
-        if (id == explorer_id) return new Explorer(shield, speed);
-
-        if (id == starcruiser_id) return new StarCruiser(shield, speed, attack);
-
-        if(id == xwing_id) return new XWing(shield, speed, attack);
-
-        return nullptr;
-    }
-};
-class ExplorerFactory : public Factory {
-public:
-    public Explorer createExplorer(ShieldPoints shield, Speed speed, AttackPower attack) {
-        return //????
-    }
-};
+ 
 
 
 #endif //STARWARS2_REBELFLEET_H
