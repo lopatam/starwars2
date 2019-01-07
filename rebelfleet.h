@@ -51,7 +51,7 @@ protected:
 
 
 public:
-    Explorer(ShieldPoints shield, Speed speed) : RebelStarship(shield, speed, -1) {
+    Explorer(ShieldPoints shield, Speed speed) : shieldValue(shield), speedValue(speed) {
         assert(speed >= 299796 && speed <= 2997960);
     }
 
