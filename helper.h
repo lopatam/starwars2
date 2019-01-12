@@ -4,11 +4,11 @@
 #include <algorithm>
 #include <cassert>
 
+using AttackPower = int;
+using ShieldPoints = int;
+using Speed = int;
+
 class Starship {
-protected:
-    using AttackPower = int;
-    using ShieldPoints = int;
-    using Speed = int;
 };
 
 class AttackingStarship : public virtual Starship {

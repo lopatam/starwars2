@@ -27,13 +27,9 @@ public:
 
         assert(speed >= 299796 && speed <= 2997960);
     }
-
-	Explorer createExplorer(ShieldPoints shield, Speed speed) {
-		return new Explorer(shield, speed);
-	}
 };
 
-class StarCruiser : public RebelStarship, public ShieldedStarship, public MovingStarship {
+class StarCruiser : public RebelStarship, public ShieldedStarship, public MovingStarship, public AttackingStarship {
 
 public:
     StarCruiser(ShieldPoints shield, Speed speed, AttackPower attack)
@@ -45,7 +41,7 @@ public:
     }
 };
 
-class XWing : public RebelStarship, public ShieldedStarship, public MovingStarship {
+class XWing : public RebelStarship, public ShieldedStarship, public MovingStarship, public AttackingStarship {
 
 public:
     XWing(ShieldPoints shield, Speed speed, AttackPower attack)
