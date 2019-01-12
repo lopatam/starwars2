@@ -1,0 +1,9 @@
+#ifndef STARWARS2_IMPERIALFLEET_H
+#define STARWARS2_IMPERIALFLEET_H
+
+class ImperialStarship {
+
+};
+
+
+#endif //STARWARS2_IMPERIALFLEET_H

@@ -14,9 +14,10 @@ using AttackPower = int;
 
 class RebelStarship {
 protected:
-    ShieldPoints shieldValue;
-    Speed speedValue;
-    AttackPower attackValue;
+    size_t alive = 1;
+    ShieldPoints shieldValue = 0;
+    Speed speedValue = 0;
+    AttackPower attackValue = 0;
     RebelStarship(ShieldPoints shield, Speed speed, AttackPower attack) :
             shieldValue(shield), speedValue(speed), attackValue(attack) {
         pr printf("konstruktor rebelstarship sie wywoluje i zapisuje %d %d %d\n", shieldValue, speedValue, attackValue);
@@ -24,8 +25,8 @@ protected:
     RebelStarship(){
         pr printf("pusty konstruktor rebelstarship: %d %d %d\n", shieldValue, speedValue, attackValue);
     }
-    virtual bool canAttack() {
-        return true;
+    virtual bool canAttack() {  // TODO: canAttack() będzie potrzebne w funkcji attack()
+        return true;            // żeby attack() mogła wywołać canAttack() trzeba będzie "zfriendować"
     }
 
 public:
@@ -40,7 +41,10 @@ public:
 
     void takeDamage(AttackPower damage) {
         if (shieldValue > damage) shieldValue -= damage;
-        else shieldValue = 0;
+        else {
+            shieldValue = 0;
+            alive = 0;
+        }
     }
 
     AttackPower getAttackPower() {
@@ -50,8 +54,8 @@ public:
 
 
 class Explorer : public RebelStarship {
-protected:                      // TODO: canAttack() będzie potrzebne w funkcji attack()
-    virtual bool canAttack() {  // żeby attack() mogła wywołać canAttack() trzeba będzie "zfriendować"
+protected:
+    bool canAttack() override {
         return false;
     }
 public:
