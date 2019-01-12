@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cstdio>
 #include "helper.h"
+#include <memory>
 
 #define pr if(1)
 
@@ -15,7 +16,6 @@
 class RebelStarship {
 };
 
-//TODO: zastanowić się nad zmianą funkcji fabrykujących na sprytne wskaźniki
 
 
 class Explorer : public RebelStarship, public ShieldedStarship, public MovingStarship {
@@ -43,11 +43,6 @@ public:
 
         assert(speed >= 99999 && speed <= 299795);
     }
-
-	StarCruiser createStarCruiser(ShieldPoints shield, Speed speed, AttackPower attack) {
-		return new StarCruiser(shield, speed, attack);
-	}
-
 };
 
 class XWing : public RebelStarship, public ShieldedStarship, public MovingStarship {
@@ -60,10 +55,21 @@ public:
 
         assert(speed >= 299796 && speed <= 2997960);
     }
-
-	XWing createXWing(ShieldPoints shield, Speed speed, AttackPower attack) {
-		return new XWing(shield, speed, attack);
-	}
 };
+
+std::shared_ptr<Explorer> createExplorer(ShieldPoints shield, Speed speed) {
+    return std::make_shared<Explorer>(shield, speed);
+}
+
+std::shared_ptr<StarCruiser> createStarCruiser(ShieldPoints shield, Speed speed, AttackPower attack) {
+    return std::make_shared<StarCruiser>(shield, speed, attack);
+}
+
+std::shared_ptr<XWing> createXWing(ShieldPoints shield, Speed speed, AttackPower attack) {
+    return std::make_shared<XWing>(shield, speed, attack);
+}
+
+
+
 
 #endif //STARWARS2_REBELFLEET_H
