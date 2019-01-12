@@ -24,6 +24,7 @@ protected:
             assert(maxTime > 0);
         }
         bool canAttackNow() {
+            pr printf("mamy czas %d, pyta czy można atakować\n", actTime);
             return ((actTime %2 == 0 || actTime %3 == 0) && actTime %5 != 0);
 
         }
@@ -31,6 +32,7 @@ protected:
             assert(t >= 0);
             actTime += t;
             actTime %= maxTime; // NIE JESTEM PEWIEN CZY DOKŁADNIE TAK DZIAŁA TEN CZAS
+            pr printf("minął czas, mamy już %d\n", actTime);
         }
     };
 
@@ -39,23 +41,48 @@ protected:
     Time sTime, mTime;
     Clock myClock;
     SpaceBattle(std::vector<std::shared_ptr<RebelStarship>>rebel,
-            std::vector<std::shared_ptr<ImperialStarship>>imperial,
-            Time t1, Time t2)
+                std::vector<std::shared_ptr<ImperialStarship>>imperial,
+                Time t1, Time t2)
             : sTime(t1), mTime(t2), myClock(t1, t2) {
         rebelShips = std::move(rebel);
         imperialShips = std::move(imperial);
     }
-    void attack(ImperialStarship imperialShip, RebelStarship rebelShip) {
-        rebelShip.takeDamage(imperialShip.getAttackPower());
-        if (rebelShip.canAttack())
-            imperialShip.takeDamage(rebelShip.getAttackPower());
+    //void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<)
+    void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<RebelStarship> rebelShip) {
+        rebelShip -> takeDamage(imperialShip -> getAttackPower());
+        // TODO: zrobić tak żeby to poniżej działało
+        auto checkType = std::dynamic_pointer_cast<AttackingStarship>(rebelShip);
+        if(checkType == nullptr) {
+            pr printf("nie udalo sie przekonwertować rebela na atakującego, nie ma kontry\n");
+        }
+        else {
+            pr printf("jest kontra\n");
+            imperialShip -> takeDamage(checkType -> getAttackPower());
+        }
     }
 
 public:
     void tick(Time timestep) {
-        if(countRebelFleet())
+
+        if (countRebelFleet() == 0) {           // gdy któraś frakcja nie ma już statków, to czas się nie przesuwa
+            if (countImperialFleet() == 0) {    // nie wiem czy to czemuś szkodzi, chyba nie
+                std::cout << "DRAW\n" << std::endl;
+                return;
+            }
+            std::cout << "IMPERIUM WON\n" << std::endl;
+            return;
+        }
+        if (countImperialFleet() == 0) {
+            std::cout << "REBELLION WON\n" << std::endl;
+            return;
+        }
         if (myClock.canAttackNow()) {
-            // TODO: jakieś ataki
+            for (const auto& imperialShip : imperialShips) {
+                for (const auto& rebelShip : rebelShips) {
+                    if (imperialShip -> getShield() > 0 && rebelShip -> getShield() > 0)
+                        attack(imperialShip, rebelShip);
+                }
+            }
 
 
         }

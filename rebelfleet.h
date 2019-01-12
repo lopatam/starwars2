@@ -5,49 +5,46 @@
 #include <cassert>
 #include <cstdio>
 #include "helper.h"
-#include <memory>
 
-#define pr if(1)
 
-#define explorer_id 1;
-#define starcruiser_id 2;
-#define xwing_id 3;
-
-class RebelStarship {
+class RebelStarship : public Starship{
+protected:
+    Speed speedValue;
+public:
+    RebelStarship(ShieldPoints shield, Speed speed)
+            : Starship(shield), speedValue(speed) {}
+    Speed getSpeed() {
+        return speedValue;
+    }
 };
 
 
 
-class Explorer : public RebelStarship, public ShieldedStarship, public MovingStarship {
+class Explorer : public RebelStarship{
 
 public:
     Explorer(ShieldPoints shield, Speed speed)
-        : ShieldedStarship(shield),
-          MovingStarship(speed) {
-
+            : RebelStarship(shield, speed) {
         assert(speed >= 299796 && speed <= 2997960);
     }
 };
 
-class StarCruiser : public RebelStarship, public ShieldedStarship, public MovingStarship, public AttackingStarship {
+class StarCruiser : public RebelStarship, public AttackingStarship {
 
 public:
     StarCruiser(ShieldPoints shield, Speed speed, AttackPower attack)
-        : ShieldedStarship(shield),
-          MovingStarship(speed),
-          AttackingStarship(attack) {
-
+            : RebelStarship(shield, speed),
+              AttackingStarship(attack) {
         assert(speed >= 99999 && speed <= 299795);
     }
 };
 
-class XWing : public RebelStarship, public ShieldedStarship, public MovingStarship, public AttackingStarship {
+class XWing : public RebelStarship, public AttackingStarship {
 
 public:
     XWing(ShieldPoints shield, Speed speed, AttackPower attack)
-        : ShieldedStarship(shield),
-          MovingStarship(speed),
-          AttackingStarship(attack) {
+            : RebelStarship(shield, speed),
+              AttackingStarship(attack) {
 
         assert(speed >= 299796 && speed <= 2997960);
     }
