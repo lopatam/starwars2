@@ -8,7 +8,6 @@
 #include <vector>
 #include "rebelfleet.h"
 #include "imperialfleet.h"
-#define pr if(1)    // do debugowania, potem się wywali
 
 
 using Time = int;
@@ -40,26 +39,38 @@ protected:
     Time sTime, mTime;
     Clock myClock;
     SpaceBattle(std::vector<std::shared_ptr<RebelStarship>>rebel,
-                std::vector<std::shared_ptr<ImperialStarship>>imperial,
-                Time t1, Time t2)
-                : sTime(t1), mTime(t2), myClock(t1, t2) {
-                    rebelShips = std::move(rebel);
-                    imperialShips = std::move(imperial);
-                }
+            std::vector<std::shared_ptr<ImperialStarship>>imperial,
+            Time t1, Time t2)
+            : sTime(t1), mTime(t2), myClock(t1, t2) {
+        rebelShips = std::move(rebel);
+        imperialShips = std::move(imperial);
+    }
+    void attack(ImperialStarship imperialShip, RebelStarship rebelShip) {
+        rebelShip.takeDamage(imperialShip.getAttackPower());
+        if (rebelShip.canAttack())
+            imperialShip.takeDamage(rebelShip.getAttackPower());
+    }
 
 public:
     void tick(Time timestep) {
-        if(myClock.canAttackNow()) {
+        if(countRebelFleet())
+        if (myClock.canAttackNow()) {
             // TODO: jakieś ataki
+
 
         }
         myClock.passTime(timestep);
     }
     size_t countRebelFleet() {
-
-
+        size_t result = 0;
+        for (const auto& ship : rebelShips) result += ship -> getAlive();    // nie wiem czy typ shipa jest ok
+        return result;
     }
-
+    size_t countImperialFleet() {
+        size_t result = 0;
+        for (const auto& ship : imperialShips) result += ship -> getAlive();
+        return result;
+    }
 
     class Builder {
     private:
