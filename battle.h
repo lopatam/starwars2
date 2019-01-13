@@ -48,7 +48,7 @@ protected:
         imperialShips = std::move(imperial);
     }
     //void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<)
-    void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<RebelStarship> rebelShip) {
+    void attack(std::shared_ptr<ImperialStarship> const &imperialShip, std::shared_ptr<RebelStarship> const &rebelShip) {
         rebelShip -> takeDamage(imperialShip -> getAttackPower());
         auto checkType = std::dynamic_pointer_cast<AttackingStarship>(rebelShip);
         if(checkType == nullptr) {
@@ -89,7 +89,7 @@ public:
     }
     size_t countRebelFleet() {
         size_t result = 0;
-        for (const auto& ship : rebelShips) result += ship -> getAlive();    // nie wiem czy typ shipa jest ok
+        for (const auto& ship : rebelShips) result += ship -> getAlive();
         return result;
     }
     size_t countImperialFleet() {
@@ -112,11 +112,11 @@ public:
             sTime = t;
             return *this;
         }
-        Builder ship(std::shared_ptr<RebelStarship> s) {
+        Builder ship(std::shared_ptr<RebelStarship> const &s) {
             rebelShips.push_back(s);
             return *this;
         }
-        Builder ship(std::shared_ptr<ImperialStarship> s) {
+        Builder ship(std::shared_ptr<ImperialStarship> const &s) {
             imperialShips.push_back(s);
             return *this;
         }

@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cassert>
 #include <memory>
-#define pr if (1)
+#define pr if (0)
 
 using AttackPower = int;
 using ShieldPoints = int;
@@ -19,7 +19,7 @@ protected:
     ShieldPoints shieldValue;
 public:
 
-    virtual size_t getAlive() {
+    size_t getAlive() const {
         return alive;
     }
 
@@ -30,7 +30,7 @@ public:
         return shieldValue;
     }
     virtual void takeDamage(AttackPower damage) {
-        if(shieldValue < damage) {
+        if (shieldValue <= damage) {
             shieldValue = 0;
             alive = 0;
         }

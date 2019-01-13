@@ -43,7 +43,7 @@ private:
         alive = 0;
         shieldValue = 0;
         attackValue = 0;
-        for(auto &i : ships) {
+        for (const auto &i : ships) {
             alive += i -> getAlive();
             shieldValue += i -> getShield();
             attackValue += i -> getAttackPower();
@@ -79,6 +79,7 @@ public:
         }
         return result;
     }
+
 
 };
 
