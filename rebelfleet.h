@@ -16,8 +16,6 @@
 class RebelStarship {
 };
 
-
-
 class Explorer : public RebelStarship, public ShieldedStarship, public MovingStarship {
 
 public:
@@ -64,8 +62,5 @@ std::shared_ptr<StarCruiser> createStarCruiser(ShieldPoints shield, Speed speed,
 std::shared_ptr<XWing> createXWing(ShieldPoints shield, Speed speed, AttackPower attack) {
     return std::make_shared<XWing>(shield, speed, attack);
 }
-
-
-
 
 #endif //STARWARS2_REBELFLEET_H
