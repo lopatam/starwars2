@@ -17,11 +17,12 @@ class Starship {
 protected:
     size_t alive = 1;
     ShieldPoints shieldValue;
+public:
 
     virtual size_t getAlive() {
         return alive;
     }
-public:
+
     explicit Starship(ShieldPoints shield) : shieldValue(shield) {
         assert(shield >= 0);
     }

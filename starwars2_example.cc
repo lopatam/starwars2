@@ -12,7 +12,7 @@ int main() {
     auto fighter = createTIEFighter(50000, 90);
     auto destroyer = createImperialDestroyer(150, 20);
     //auto squadron = createSquadron({deathStar, fighter});
-    auto squadron =  Squadron({deathStar, fighter});
+    //auto squadron =  Squadron({deathStar, fighter});
 
     auto battle = SpaceBattle::Builder()
             .startTime(2)
