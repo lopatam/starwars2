@@ -57,10 +57,27 @@ public:
     }
 
     void takeDamage(AttackPower damage) override {
-        for(auto &i : ships) {
+        for (auto &i : ships) {
             i -> takeDamage(damage);
         }
         update();
+    }
+
+    ShieldPoints getShield() override {
+        ShieldPoints result = 0;
+        for (auto &i : ships) {
+            result += i -> getShield();
+        }
+        return result;
+    }
+
+    AttackPower getAttackPower() override{
+        AttackPower result = 0;
+        for (auto &i : ships) {
+            if (i -> getShield() > 0)
+                result += i -> getAttackPower();
+        }
+        return result;
     }
 
 };
@@ -77,7 +94,7 @@ std::shared_ptr<TIEFighter> createTIEFighter(ShieldPoints shield, AttackPower at
     return std::make_shared<TIEFighter>(shield, attack);
 }
 
-std::shared_ptr<Squadron> createSquadron(std::vector <std::shared_ptr<ImperialStarship>> const &ships) {
+std::shared_ptr<Squadron> createSquadron(std::vector <std::shared_ptr<ImperialStarship>> ships) {
     pr printf("wywolanie wektora\n");
     return std::make_shared<Squadron>(ships);
 }
