@@ -11,14 +11,16 @@ int main() {
     auto deathStar = createDeathStar(10, 70);
     auto fighter = createTIEFighter(50000, 90);
     auto destroyer = createImperialDestroyer(150, 20);
+    auto deathStar2 = createDeathStar(10,70);
+    const std::initializer_list<std::shared_ptr<ImperialStarship>> v = {deathStar, fighter};
+    auto squadron = createSquadron(v);     //jadowity test z constami!!!!
     //auto squadron = createSquadron({deathStar, fighter});
     //auto squadron =  Squadron({deathStar, fighter});
 
     auto battle = SpaceBattle::Builder()
             .startTime(2)
             .maxTime(23)
-            .ship(deathStar)
-            .ship(fighter)
+            .ship(squadron)
             .ship(xwing)
             .ship(explorer)
             .build();

@@ -3,6 +3,7 @@
 
 #include "helper.h"
 #include <vector>
+//#include <initializer_list>
 #include <memory>
 
 class ImperialStarship : public Starship, public AttackingStarship{
@@ -36,31 +37,28 @@ public:
 class Squadron : public ImperialStarship {
 
 private:
-    std::vector<ImperialStarship> ships;
+    std::vector<std::shared_ptr<ImperialStarship>> ships;
 
     void update() {
         alive = 0;
         shieldValue = 0;
         attackValue = 0;
         for(auto &i : ships) {
-            alive += i.getAlive();
-            shieldValue += i.getShield();
-            attackValue += i.getAttackPower();
+            alive += i -> getAlive();
+            shieldValue += i -> getShield();
+            attackValue += i -> getAttackPower();
         }
     }
 
 public:
-    explicit Squadron(std::vector<ImperialStarship> &ships) : ships(ships) {
+    explicit Squadron(std::vector<std::shared_ptr<ImperialStarship>> ships) {
+        this -> ships = std::move(ships);
         update();
     }
 
-    /*Squadron(const std::initializer_list<ImperialStarship> &ships) : ships(ships) {
-        update();
-    }*/ //TODO
-
     void takeDamage(AttackPower damage) override {
         for(auto &i : ships) {
-            i.takeDamage(damage);
+            i -> takeDamage(damage);
         }
         update();
     }
@@ -79,13 +77,15 @@ std::shared_ptr<TIEFighter> createTIEFighter(ShieldPoints shield, AttackPower at
     return std::make_shared<TIEFighter>(shield, attack);
 }
 
-std::shared_ptr<Squadron> createSquadron(std::vector <ImperialStarship> &ships) {
+std::shared_ptr<Squadron> createSquadron(std::vector <std::shared_ptr<ImperialStarship>> const &ships) {
+    pr printf("wywolanie wektora\n");
     return std::make_shared<Squadron>(ships);
 }
 
-/*
-std::shared_ptr<Squadron> createSquadron(std::initializer_list <ImperialStarship> const &ships) {
-    return std::make_shared<Squadron>(std::initializer_list<ImperialStarship> {ships});
-}*/ //TODO
+
+/*std::shared_ptr<Squadron> createSquadron(std::initializer_list <std::shared_ptr<ImperialStarship>> const &ships) {
+    pr printf("wywolanie listy\n");
+    return std::make_shared<Squadron>(ships);
+}*/
 
 #endif //STARWARS2_IMPERIALFLEET_H

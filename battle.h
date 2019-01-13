@@ -31,7 +31,7 @@ protected:
         void passTime(Time t) {
             assert(t >= 0);
             actTime += t;
-            actTime %= maxTime; // NIE JESTEM PEWIEN CZY DOKŁADNIE TAK DZIAŁA TEN CZAS
+            if (actTime > maxTime) actTime = actTime % (maxTime + 1);
             pr printf("minął czas, mamy już %d\n", actTime);
         }
     };
@@ -50,7 +50,6 @@ protected:
     //void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<)
     void attack(std::shared_ptr<ImperialStarship> imperialShip, std::shared_ptr<RebelStarship> rebelShip) {
         rebelShip -> takeDamage(imperialShip -> getAttackPower());
-        // TODO: zrobić tak żeby to poniżej działało
         auto checkType = std::dynamic_pointer_cast<AttackingStarship>(rebelShip);
         if(checkType == nullptr) {
             pr printf("nie udalo sie przekonwertować rebela na atakującego, nie ma kontry\n");
