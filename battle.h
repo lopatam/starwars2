@@ -65,14 +65,14 @@ public:
 
         if (countRebelFleet() == 0) {           // gdy któraś frakcja nie ma już statków, to czas się nie przesuwa
             if (countImperialFleet() == 0) {    // nie wiem czy to czemuś szkodzi, chyba nie
-                std::cout << "DRAW\n" << std::endl;
+                std::cout << "DRAW\n";
                 return;
             }
-            std::cout << "IMPERIUM WON\n" << std::endl;
+            std::cout << "IMPERIUM WON\n";
             return;
         }
         if (countImperialFleet() == 0) {
-            std::cout << "REBELLION WON\n" << std::endl;
+            std::cout << "REBELLION WON\n";
             return;
         }
         if (myClock.canAttackNow()) {
