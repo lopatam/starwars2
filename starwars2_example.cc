@@ -10,8 +10,9 @@ int main() {
     auto const explorer2 = createExplorer(150, 400000);
     auto deathStar = createDeathStar(10, 70);
     auto fighter = createTIEFighter(50000, 90);
-    /*auto destroyer = createImperialDestroyer(150, 20);
-    auto squadron = createSquadron({deathStar, fighter});
+    auto destroyer = createImperialDestroyer(150, 20);
+    //auto squadron = createSquadron({deathStar, fighter});
+    auto squadron =  Squadron({deathStar, fighter});
 
     auto battle = SpaceBattle::Builder()
             .startTime(2)
