@@ -3,60 +3,52 @@
 
 #include <algorithm>
 #include <cassert>
+#include <memory>
+#define pr if (1)
 
 using AttackPower = int;
 using ShieldPoints = int;
 using Speed = int;
 
+class SpaceBattle;
+
 class Starship {
+    friend SpaceBattle;
+protected:
+    size_t alive = 1;
+    ShieldPoints shieldValue;
+
+    virtual size_t getAlive() {
+        return alive;
+    }
+public:
+    explicit Starship(ShieldPoints shield) : shieldValue(shield) {
+        assert(shield >= 0);
+    }
+    virtual ShieldPoints getShield() {
+        return shieldValue;
+    }
+    virtual void takeDamage(AttackPower damage) {
+        if(shieldValue < damage) {
+            shieldValue = 0;
+            alive = 0;
+        }
+        else shieldValue -= damage;
+    }
 };
 
-class AttackingStarship : public virtual Starship {
-
+class AttackingStarship {
 protected:
+
     AttackPower attackValue;
 
-    AttackingStarship(AttackPower attack) : attackValue(attack) {
+    explicit AttackingStarship(AttackPower attack) : attackValue(attack) {
         assert(attack >= 0);
     }
 
 public:
-    AttackPower getAttackPower() {
+    virtual AttackPower getAttackPower() {
         return attackValue;
-    }
-};
-
-class ShieldedStarship : public virtual Starship {
-
-protected:
-    ShieldPoints shieldValue;
-
-    ShieldedStarship(ShieldPoints shield) : shieldValue(shield) {
-        assert(shield >=  0);
-    }
-
-public:
-    ShieldPoints getShield() {
-        return shieldValue;
-    }
-
-    void takeDamage(AttackPower damage) {
-        shieldValue = std::max(shieldValue - damage, 0);
-    }
-
-};
-
-class MovingStarship : public virtual Starship {
-protected:
-    Speed speedValue;
-
-    MovingStarship(Speed speed) : speedValue(speed) {
-        assert(speed >= 0);
-    }
-
-public:
-    Speed getSpeed() {
-        return speedValue;
     }
 };
 
