@@ -24,7 +24,6 @@ int main() {
     assert(battle.countImperialFleet() == 2);
 
     battle.tick(3);
-    pr printf("teraz powinno byc 2 1 a jest %d %d\n", (int)battle.countRebelFleet(), (int)battle.countImperialFleet());
     assert(battle.countRebelFleet() == 2);
     assert(battle.countImperialFleet() == 1);
 

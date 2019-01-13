@@ -24,7 +24,6 @@ protected:
             assert(maxTime > 0);
         }
         bool canAttackNow() {
-            pr printf("mamy czas %d, pyta czy można atakować\n", actTime);
             return ((actTime %2 == 0 || actTime %3 == 0) && actTime %5 != 0);
 
         }
@@ -32,7 +31,6 @@ protected:
             assert(t >= 0);
             actTime += t;
             if (actTime > maxTime) actTime = actTime % (maxTime + 1);
-            pr printf("minął czas, mamy już %d\n", actTime);
         }
     };
 
@@ -52,10 +50,8 @@ protected:
         rebelShip -> takeDamage(imperialShip -> getAttackPower());
         auto checkType = std::dynamic_pointer_cast<AttackingStarship>(rebelShip);
         if(checkType == nullptr) {
-            pr printf("nie udalo sie przekonwertować rebela na atakującego, nie ma kontry\n");
         }
         else {
-            pr printf("jest kontra\n");
             imperialShip -> takeDamage(checkType -> getAttackPower());
         }
     }

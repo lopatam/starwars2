@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cassert>
 #include <memory>
-#define pr if (0)
 
 using AttackPower = int;
 using ShieldPoints = int;

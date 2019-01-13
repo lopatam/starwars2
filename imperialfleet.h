@@ -3,7 +3,6 @@
 
 #include "helper.h"
 #include <vector>
-//#include <initializer_list>
 #include <memory>
 
 class ImperialStarship : public Starship, public AttackingStarship{
@@ -96,14 +95,10 @@ std::shared_ptr<TIEFighter> createTIEFighter(ShieldPoints shield, AttackPower at
 }
 
 std::shared_ptr<Squadron> createSquadron(std::vector <std::shared_ptr<ImperialStarship>> ships) {
-    pr printf("wywolanie wektora\n");
     return std::make_shared<Squadron>(ships);
 }
 
 
-/*std::shared_ptr<Squadron> createSquadron(std::initializer_list <std::shared_ptr<ImperialStarship>> const &ships) {
-    pr printf("wywolanie listy\n");
-    return std::make_shared<Squadron>(ships);
-}*/
+
 
 #endif //STARWARS2_IMPERIALFLEET_H
